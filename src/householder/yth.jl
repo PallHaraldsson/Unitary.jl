@@ -1,5 +1,5 @@
 struct YUH{F} <: AbstractMatrix{F}
-	Y::Matrix{F}
+	Y::LowerTriangular{F}
 	U::Matrix{F}
 end
 
@@ -11,7 +11,7 @@ Base.show(io, a::YUH) = pritnln(io, "Unitary matrix of size $(size(a.Y))")
 
 function YUH(x::Matrix)
 	@assert size(x,1) == size(x,2)
-	a = YUH(Matrix(LowerTriangular(x)), similar(x))
+	a = YUH(LowerTriangular(x), similar(x))
 	updateu!(a)
 	a
 end
@@ -52,6 +52,18 @@ function T_matrix(Y::AbstractMatrix)
 	@inbounds for i = 2:n
 		T[i, i] = HH_t(Y, i)
 		T[1:i-1, i] = @views -T[i, i] * T[1:i-1, 1:i-1] * Y[:, 1:i-1]' * Y[:, i]
+	end
+	T
+end
+
+function T_matrix(Y::LowerTriangular)
+	n = size(Y, 1)
+	@assert size(Y, 2) <= n
+	T = zeros(eltype(Y), n, n)
+	T[1, 1] = HH_t(Y, 1)
+	@inbounds for i = 2:n
+		T[i, i] = HH_t(Y, i)
+		T[1:i-1, i] = @views -T[i, i] * T[1:i-1, 1:i-1] * Y[i:end, 1:i-1]' * Y[i:end, i]
 	end
 	T
 end
