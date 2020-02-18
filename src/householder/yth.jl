@@ -41,7 +41,7 @@ function Base.copyto!(a::YUH, bc::Base.Broadcast.Broadcasted)
 end
 
 @inline HH_t(Y::AbstractMatrix, i::Int) = 2 / sum((@view Y[:, i]).^2)
-@inline HH_t(Y::LowerTriangular, i::Int) = 2 / sum(Y[j,i]^2 for j in i:size(Y,2))
+@inline HH_t(Y::LowerTriangular, i::Int) = 2 / sum((@view Y[i:end, i]).^2)
 @inline HH_t(y) = 2 / dot(y, y)
 
 function T_matrix(Y::AbstractMatrix)
