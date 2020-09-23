@@ -2,7 +2,7 @@
 
 A differentiable parametrization of a group of unitary matrices as described in paper
 \* Sum-Product-Transform Networks: Exploiting Symmetries using Invertible Transformation, 
-Tomas Pevny, Vasek Smidl, Martin Trapp, Ondrej Polacek, Tomas Oberhuber, 2020 * [arxiv.org/abs/2005.01297](arxiv.org/abs/2005.01297)
+Tomas Pevny, Vasek Smidl, Martin Trapp, Ondrej Polacek, Tomas Oberhuber, 2020 * [arxiv.org/abs/2005.01297](https://arxiv.org/abs/2005.01297)
 
 This repository contains the implementations of four types of parametrizations.
 
